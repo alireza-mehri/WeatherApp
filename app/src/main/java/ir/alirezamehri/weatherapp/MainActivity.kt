@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.CheckBox
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
@@ -16,10 +14,10 @@ import org.json.JSONObject
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+    var currentCity = "tehran"
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase!!))
     }
@@ -28,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
 
         getData()
     }
@@ -44,11 +41,29 @@ class MainActivity : AppCompatActivity() {
         tempMin: Double,
         tempMax: Double,
         pressure: Int,
-        humidity: Int
+        humidity: Int,
+        windDeg: Int,
+        windSpeed: Int
     ) {
         binding.imageViewInfo.setOnClickListener(){
             val intent = Intent(this, infoActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.refresh.setOnClickListener(){
+            reLoadData()
+        }
+        binding.buttonMashhad.setOnClickListener(){
+            currentCity = "mashhad"
+            reLoadData()
+        }
+        binding.buttonTehran.setOnClickListener(){
+            currentCity = "tehran"
+            reLoadData()
+        }
+        binding.buttonTabriz.setOnClickListener(){
+            currentCity = "tabriz"
+            reLoadData()
         }
 
         binding.refresh.visibility = View.VISIBLE
@@ -66,6 +81,9 @@ class MainActivity : AppCompatActivity() {
         binding.textViewpressure.text = " فشار هوا : ${pressure}"
         binding.textViewhumidity.text = " رطوبت هوا : ${humidity}"
 
+        binding.textViewSpeed.text = " سرعت باد : ${windSpeed}"
+        binding.textViewDeg.text = " درجه باد : ${windDeg}"
+
 
         Glide.with(this@MainActivity).load(imageUrl).into(binding.imageViewWeather)
     }
@@ -80,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     private fun getData() {
         val client = OkHttpClient()
         val request = Request.Builder()
-            .url("https://api.openweathermap.org/data/2.5/weather?q=tehran&appid=40c2fae6f3611c044dde04b13bde5451&lang=fa&units=metric")
+            .url("https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=40c2fae6f3611c044dde04b13bde5451&lang=fa&units=metric")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -117,6 +135,9 @@ class MainActivity : AppCompatActivity() {
         val pressure = jsonObject.getJSONObject("main").getInt("pressure")
         val humidity = jsonObject.getJSONObject("main").getInt("humidity")
 
+        val windSpeed = jsonObject.getJSONObject("wind").getInt("speed")
+        val windDeg = jsonObject.getJSONObject("wind").getInt("deg")
+
         val weatherArray = jsonObject.getJSONArray("weather")
         val weatherObject = weatherArray.getJSONObject(0)
         val iconId = weatherObject.getString("icon")
@@ -133,12 +154,14 @@ class MainActivity : AppCompatActivity() {
                 tempMin,
                 tempMax,
                 pressure,
-                humidity
+                humidity,
+                windDeg,
+                windSpeed
             )
         }
     }
 
-    fun reLoadData(view: View) {
+    fun reLoadData() {
         binding.refresh.visibility = View.INVISIBLE
         binding.progressBar.visibility = View.VISIBLE
 
@@ -150,6 +173,8 @@ class MainActivity : AppCompatActivity() {
         binding.textViewhumidity.text ="--"
         binding.textViewSunset.text = "--"
         binding.textViewSunrise.text = "--"
+        binding.textViewSpeed.text = "--"
+        binding.textViewDeg.text = "--"
         binding.textViewWeatherDescription.text = "--"
         Glide.with(this@MainActivity).load(R.drawable.ic_refresh).into(binding.imageViewWeather)
 
