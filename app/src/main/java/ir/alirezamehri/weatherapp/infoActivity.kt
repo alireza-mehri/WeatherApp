@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ir.alirezamehri.weatherapp.databinding.ActivityInfoBinding
-import ir.alirezamehri.weatherapp.databinding.ActivityMainBinding
+
 
 class infoActivity : AppCompatActivity() {
     lateinit var binding: ActivityInfoBinding
@@ -13,9 +13,11 @@ class infoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.imageViewBack.setOnClickListener(){
+        binding.imageViewBack.setOnClickListener() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
+
+
 }

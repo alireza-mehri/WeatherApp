@@ -6,44 +6,33 @@
     android:layout_height="wrap_content"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_180sdp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="TODO"
-        android:src="@drawable/tower"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCityName" />
-
     <TextView
         android:id="@+id/textViewCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="--"
-        android:textSize="@dimen/_18sdp"
+        android:textSize="@dimen/_20sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/gps" />
 
     <TextView
         android:id="@+id/textViewWeatherDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="--"
         android:textSize="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <ImageView
         android:id="@+id/imageViewWeather"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,10 +43,10 @@
         android:id="@+id/textViewSunrise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="32dp"
         android:text="--"
         android:textSize="@dimen/_10sdp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintBottom_toTopOf="@+id/cardView3"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="@+id/imageView4" />
 
@@ -65,7 +54,7 @@
         android:id="@+id/textViewSunset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="32dp"
         android:text="--"
         android:textSize="@dimen/_10sdp"
         app:layout_constraintBottom_toTopOf="@+id/cardView2"
@@ -75,13 +64,11 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
         android:layout_width="@dimen/_130sdp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_75sdp"
         android:layout_margin="16dp"
-        android:layout_marginTop="16dp"
         app:cardCornerRadius="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        app:layout_constraintTop_toBottomOf="@+id/imageViewWeather">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -93,9 +80,9 @@
                 android:layout_height="32dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:src="@drawable/wind"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/wind" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewDeg"
@@ -127,13 +114,13 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
         android:layout_width="@dimen/_130sdp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_75sdp"
         android:layout_margin="16dp"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -186,9 +173,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="@dimen/_130sdp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_75sdp"
         android:layout_margin="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="16dp"
         app:cardCornerRadius="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewWeather">
@@ -243,13 +230,13 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="@dimen/_130sdp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_160sdp"
+        android:layout_height="@dimen/_95sdp"
         android:layout_margin="16dp"
-        android:layout_marginTop="16dp"
         app:cardCornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewWeather">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCityName">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -262,7 +249,7 @@
                 android:layout_marginTop="28dp"
                 android:layout_marginBottom="8dp"
                 android:text="--"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/_12sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/textViewTemp"
                 app:layout_constraintTop_toBottomOf="@+id/textViewTemp" />
@@ -274,7 +261,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:text="--"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/_15sdp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -301,36 +288,6 @@
         android:src="@drawable/info"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonTabriz"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="تبریز"
-        app:layout_constraintEnd_toStartOf="@+id/buttonTehran"
-        app:layout_constraintStart_toEndOf="@+id/buttonMashhad"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCityName" />
-
-    <Button
-        android:id="@+id/buttonTehran"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:text="تهران"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCityName" />
-
-    <Button
-        android:id="@+id/buttonMashhad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="مشهد"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCityName" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -369,6 +326,16 @@
         android:layout_marginEnd="16dp"
         android:src="@drawable/downarrow"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/gps"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
