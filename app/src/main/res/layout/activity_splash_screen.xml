@@ -8,6 +8,24 @@
     tools:context=".SplashScreen">
 
     <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_cloud" />
+
+    <io.alterac.blurkit.BlurLayout
+        android:id="@+id/blurLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:blk_blurRadius="20"
+        app:blk_downscaleFactor="0.12">
+
+    </io.alterac.blurkit.BlurLayout>
+
+
+
+    <ImageView
         android:id="@+id/imageViewSplash"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"

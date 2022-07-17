@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "ir.alirezamehri.weatherapp"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -55,6 +55,8 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
 
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+    //glassmorphism
+    implementation 'io.alterac.blurkit:blurkit:1.1.0'
 
 
 }
