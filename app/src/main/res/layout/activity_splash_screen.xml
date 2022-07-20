@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_cloud" />
+        android:src="@drawable/bg_white" />
 
     <io.alterac.blurkit.BlurLayout
         android:id="@+id/blurLayout"
@@ -46,7 +46,6 @@
         android:layout_marginTop="32dp"
         android:text="هواشناس"
         android:textAlignment="center"
-        android:textColor="@color/white"
         android:textSize="@dimen/_25sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,10 +79,10 @@
         android:layout_marginBottom="32dp"
         android:hapticFeedbackEnabled="false"
         android:indeterminate="true"
+        android:indeterminateTint="#B2DFDB"
         android:outlineAmbientShadowColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:indeterminateTint="@color/white"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

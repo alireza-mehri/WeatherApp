@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    app:layout_constraintRight_toLeftOf="parent"
+    android:textDirection="rtl"
     tools:context=".MainActivity">
 
 
@@ -12,30 +14,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_cloud" />
+        android:src="@drawable/bg_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-   <io.alterac.blurkit.BlurLayout
-       android:id="@+id/blurLayout"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       app:blk_blurRadius="20"
-       app:blk_downscaleFactor="0.12">
+    <io.alterac.blurkit.BlurLayout
+        android:id="@+id/blurLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:blk_blurRadius="20"
+        app:blk_downscaleFactor="0.10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-   </io.alterac.blurkit.BlurLayout>
-
+    </io.alterac.blurkit.BlurLayout>
 
 
     <TextView
         android:id="@+id/textViewCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="--"
         android:textSize="@dimen/_20sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gps" />
+        app:layout_constraintTop_toBottomOf="@+id/et_city" />
 
 
     <TextView
@@ -348,14 +355,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/gps"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_map"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_city"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="@dimen/_124sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:hint="نام شهر را وارد کنید"
+        app:boxStrokeColor="@color/teal_200"
+        app:expandedHintEnabled="true"
+        app:layout_constraintEnd_toStartOf="@+id/refresh"
+        app:layout_constraintStart_toEndOf="@+id/imageViewInfo"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_city"
+            android:layout_width="@dimen/_124sdp"
+            android:layout_height="wrap_content"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
@@ -45,10 +47,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         //------------- Get location ---------------
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        RequestPermission()
-        getLastLocation()
+//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+//        RequestPermission()
+//        getLastLocation()
         //------------- Get location ---------------
+
         getData()
 
     }
@@ -73,19 +76,24 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.textCity.setOnKeyListener { v, keyCode, event ->
+
+            when {
+                //Check if it is the Enter-Key,      Check if the Enter Key was pressed down
+                ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) -> {
+                    //perform an action here e.g. a send message button click
+
+                    currentCity = binding.textCity.text.toString()
+                    reLoadData()
+                    //return true
+                    return@setOnKeyListener true
+                }
+                else -> false
+            }
+        }
         binding.refresh.setOnClickListener() {
             reLoadData()
         }
-        binding.gps.setOnClickListener() {
-            reLoadData()
-        }
-//--------   search by the City ----------------
-//        binding.buttonMashhad.setOnClickListener() {
-//            currentCity = "mashhad"
-//            reLoadData()
-//        }
-// --------   search by the City ----------------
-
         binding.refresh.visibility = View.VISIBLE
         binding.progressBar.visibility = View.INVISIBLE
 
@@ -116,11 +124,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-//------------- Get location ---------------
-//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        RequestPermission()
-        getLastLocation()
-        //------------- Get location ---------------
         val client = OkHttpClient()
         val request = Request.Builder()
             .url("https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=40c2fae6f3611c044dde04b13bde5451&lang=fa&units=metric")
@@ -143,46 +146,61 @@ class MainActivity : AppCompatActivity() {
                 val rawContent = response.body!!.string()
                 getDataToShow(rawContent)
             }
-
         })
     }
 
     private fun getDataToShow(rawData: String) {
         val jsonObject = JSONObject(rawData)
 
-        val sunrise = jsonObject.getJSONObject("sys").getInt("sunrise")
-        val sunset = jsonObject.getJSONObject("sys").getInt("sunset")
+        val okCode = jsonObject.getInt("cod")
+        if (okCode == 200) {
 
-        val temp = jsonObject.getJSONObject("main").getDouble("temp")
-        val feelsLike = jsonObject.getJSONObject("main").getDouble("feels_like")
-        val tempMin = jsonObject.getJSONObject("main").getDouble("temp_min")
-        val tempMax = jsonObject.getJSONObject("main").getDouble("temp_max")
-        val pressure = jsonObject.getJSONObject("main").getInt("pressure")
-        val humidity = jsonObject.getJSONObject("main").getInt("humidity")
 
-        val windSpeed = jsonObject.getJSONObject("wind").getInt("speed")
-        val windDeg = jsonObject.getJSONObject("wind").getInt("deg")
+            val sunrise = jsonObject.getJSONObject("sys").getInt("sunrise")
+            val sunset = jsonObject.getJSONObject("sys").getInt("sunset")
 
-        val weatherArray = jsonObject.getJSONArray("weather")
-        val weatherObject = weatherArray.getJSONObject(0)
-        val iconId = weatherObject.getString("icon")
-        val imageUrl = "https://openweathermap.org/img/wn/${iconId}@2x.png"
+            val temp = jsonObject.getJSONObject("main").getDouble("temp")
+            val feelsLike = jsonObject.getJSONObject("main").getDouble("feels_like")
+            val tempMin = jsonObject.getJSONObject("main").getDouble("temp_min")
+            val tempMax = jsonObject.getJSONObject("main").getDouble("temp_max")
+            val pressure = jsonObject.getJSONObject("main").getInt("pressure")
+            val humidity = jsonObject.getJSONObject("main").getInt("humidity")
+
+            val windSpeed = jsonObject.getJSONObject("wind").getInt("speed")
+            val windDeg = jsonObject.getJSONObject("wind").getInt("deg")
+
+            val weatherArray = jsonObject.getJSONArray("weather")
+            val weatherObject = weatherArray.getJSONObject(0)
+            val iconId = weatherObject.getString("icon")
+            val imageUrl = "https://openweathermap.org/img/wn/${iconId}@2x.png"
+            runOnUiThread {
+                showContent(
+                    jsonObject.getString("name"),
+                    weatherObject.getString("description"),
+                    imageUrl,
+                    sunrise,
+                    sunset,
+                    temp,
+                    feelsLike,
+                    tempMin,
+                    tempMax,
+                    pressure,
+                    humidity,
+                    windDeg,
+                    windSpeed
+                )
+            }
+        } else {
+            failCityName()
+        }
+    }
+
+    private fun failCityName() {
+//        Toast.makeText(this, "نام شهر یافت نشد", Toast.LENGTH_SHORT).show()
         runOnUiThread {
-            showContent(
-                jsonObject.getString("name"),
-                weatherObject.getString("description"),
-                imageUrl,
-                sunrise,
-                sunset,
-                temp,
-                feelsLike,
-                tempMin,
-                tempMax,
-                pressure,
-                humidity,
-                windDeg,
-                windSpeed
-            )
+            Toast.makeText(this, "نام شهر یافت نشد", Toast.LENGTH_LONG).show()
+            currentCity = "tehran"
+            reLoadData()
         }
     }
 
@@ -217,7 +235,7 @@ class MainActivity : AppCompatActivity() {
                     if (location == null) {
                         NewLocationData()
                     } else {
-                        currentCity = getCityName(location.latitude,location.longitude)
+                        currentCity = getCityName(location.latitude, location.longitude)
                     }
                 }
             } else {
